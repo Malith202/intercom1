@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CorporationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cFunction">
+          <Key>
+            <PropertyRef Name="function_id" />
+          </Key>
+          <Property Name="function_id" Type="int" Nullable="false" />
+          <Property Name="function_name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="company_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="company">
+          <Key>
+            <PropertyRef Name="company_id" />
+          </Key>
+          <Property Name="company_id" Type="int" Nullable="false" />
+          <Property Name="company_name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="employe">
+          <Key>
+            <PropertyRef Name="EPF_no" />
+          </Key>
+          <Property Name="EPF_no" Type="int" Nullable="false" />
+          <Property Name="Sname" Type="varchar" MaxLength="100" />
+          <Property Name="Fullname" Type="varchar" MaxLength="100" />
+          <Property Name="Office_Mobile" Type="varchar" MaxLength="100" />
+          <Property Name="Office_Land" Type="varchar" MaxLength="100" />
+          <Property Name="Office_fax" Type="varchar" MaxLength="100" />
+          <Property Name="Office_Intercom" Type="varchar" MaxLength="100" />
+          <Property Name="Office_Location" Type="varchar" MaxLength="100" />
+          <Property Name="sub_function_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sub_function">
+          <Key>
+            <PropertyRef Name="sub_function_id" />
+          </Key>
+          <Property Name="sub_function_id" Type="int" Nullable="false" />
+          <Property Name="sub_function_name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="function_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__cFunction__compa__398D8EEE">
+          <End Role="company" Type="Self.company" Multiplicity="1" />
+          <End Role="cFunction" Type="Self.cFunction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="company">
+              <PropertyRef Name="company_id" />
+            </Principal>
+            <Dependent Role="cFunction">
+              <PropertyRef Name="company_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__employe__sub_fun__3F466844">
+          <End Role="sub_function" Type="Self.sub_function" Multiplicity="1" />
+          <End Role="employe" Type="Self.employe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sub_function">
+              <PropertyRef Name="sub_function_id" />
+            </Principal>
+            <Dependent Role="employe">
+              <PropertyRef Name="sub_function_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__sub_funct__funct__3C69FB99">
+          <End Role="cFunction" Type="Self.cFunction" Multiplicity="1" />
+          <End Role="sub_function" Type="Self.sub_function" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cFunction">
+              <PropertyRef Name="function_id" />
+            </Principal>
+            <Dependent Role="sub_function">
+              <PropertyRef Name="function_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CorporationModelStoreContainer">
+          <EntitySet Name="cFunction" EntityType="Self.cFunction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="company" EntityType="Self.company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employe" EntityType="Self.employe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sub_function" EntityType="Self.sub_function" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__cFunction__compa__398D8EEE" Association="Self.FK__cFunction__compa__398D8EEE">
+            <End Role="company" EntitySet="company" />
+            <End Role="cFunction" EntitySet="cFunction" />
+          </AssociationSet>
+          <AssociationSet Name="FK__employe__sub_fun__3F466844" Association="Self.FK__employe__sub_fun__3F466844">
+            <End Role="sub_function" EntitySet="sub_function" />
+            <End Role="employe" EntitySet="employe" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sub_funct__funct__3C69FB99" Association="Self.FK__sub_funct__funct__3C69FB99">
+            <End Role="cFunction" EntitySet="cFunction" />
+            <End Role="sub_function" EntitySet="sub_function" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CorporationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="cFunction">
+          <Key>
+            <PropertyRef Name="function_id" />
+          </Key>
+          <Property Name="function_id" Type="Int32" Nullable="false" />
+          <Property Name="function_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="company_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="company" Relationship="Self.FK__cFunction__compa__398D8EEE" FromRole="cFunction" ToRole="company" />
+          <NavigationProperty Name="sub_function" Relationship="Self.FK__sub_funct__funct__3C69FB99" FromRole="cFunction" ToRole="sub_function" />
+        </EntityType>
+        <EntityType Name="company">
+          <Key>
+            <PropertyRef Name="company_id" />
+          </Key>
+          <Property Name="company_id" Type="Int32" Nullable="false" />
+          <Property Name="company_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="cFunctions" Relationship="Self.FK__cFunction__compa__398D8EEE" FromRole="company" ToRole="cFunction" />
+        </EntityType>
+        <EntityType Name="employe">
+          <Key>
+            <PropertyRef Name="EPF_no" />
+          </Key>
+          <Property Name="EPF_no" Type="Int32" Nullable="false" />
+          <Property Name="Sname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Fullname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Office_Mobile" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Office_Land" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Office_fax" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Office_Intercom" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Office_Location" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="sub_function_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="sub_function" Relationship="Self.FK__employe__sub_fun__3F466844" FromRole="employe" ToRole="sub_function" />
+        </EntityType>
+        <EntityType Name="sub_function">
+          <Key>
+            <PropertyRef Name="sub_function_id" />
+          </Key>
+          <Property Name="sub_function_id" Type="Int32" Nullable="false" />
+          <Property Name="sub_function_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="function_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="cFunction" Relationship="Self.FK__sub_funct__funct__3C69FB99" FromRole="sub_function" ToRole="cFunction" />
+          <NavigationProperty Name="employes" Relationship="Self.FK__employe__sub_fun__3F466844" FromRole="sub_function" ToRole="employe" />
+        </EntityType>
+        <Association Name="FK__cFunction__compa__398D8EEE">
+          <End Role="company" Type="Self.company" Multiplicity="1" />
+          <End Role="cFunction" Type="Self.cFunction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="company">
+              <PropertyRef Name="company_id" />
+            </Principal>
+            <Dependent Role="cFunction">
+              <PropertyRef Name="company_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__sub_funct__funct__3C69FB99">
+          <End Role="cFunction" Type="Self.cFunction" Multiplicity="1" />
+          <End Role="sub_function" Type="Self.sub_function" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cFunction">
+              <PropertyRef Name="function_id" />
+            </Principal>
+            <Dependent Role="sub_function">
+              <PropertyRef Name="function_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__employe__sub_fun__3F466844">
+          <End Role="sub_function" Type="Self.sub_function" Multiplicity="1" />
+          <End Role="employe" Type="Self.employe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sub_function">
+              <PropertyRef Name="sub_function_id" />
+            </Principal>
+            <Dependent Role="employe">
+              <PropertyRef Name="sub_function_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CorporationEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cFunctions" EntityType="Self.cFunction" />
+          <EntitySet Name="companies" EntityType="Self.company" />
+          <EntitySet Name="employes" EntityType="Self.employe" />
+          <EntitySet Name="sub_function" EntityType="Self.sub_function" />
+          <AssociationSet Name="FK__cFunction__compa__398D8EEE" Association="Self.FK__cFunction__compa__398D8EEE">
+            <End Role="company" EntitySet="companies" />
+            <End Role="cFunction" EntitySet="cFunctions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sub_funct__funct__3C69FB99" Association="Self.FK__sub_funct__funct__3C69FB99">
+            <End Role="cFunction" EntitySet="cFunctions" />
+            <End Role="sub_function" EntitySet="sub_function" />
+          </AssociationSet>
+          <AssociationSet Name="FK__employe__sub_fun__3F466844" Association="Self.FK__employe__sub_fun__3F466844">
+            <End Role="sub_function" EntitySet="sub_function" />
+            <End Role="employe" EntitySet="employes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CorporationModelStoreContainer" CdmEntityContainer="CorporationEntities">
+          <EntitySetMapping Name="cFunctions">
+            <EntityTypeMapping TypeName="CorporationModel.cFunction">
+              <MappingFragment StoreEntitySet="cFunction">
+                <ScalarProperty Name="function_id" ColumnName="function_id" />
+                <ScalarProperty Name="function_name" ColumnName="function_name" />
+                <ScalarProperty Name="company_id" ColumnName="company_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="companies">
+            <EntityTypeMapping TypeName="CorporationModel.company">
+              <MappingFragment StoreEntitySet="company">
+                <ScalarProperty Name="company_id" ColumnName="company_id" />
+                <ScalarProperty Name="company_name" ColumnName="company_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employes">
+            <EntityTypeMapping TypeName="CorporationModel.employe">
+              <MappingFragment StoreEntitySet="employe">
+                <ScalarProperty Name="EPF_no" ColumnName="EPF_no" />
+                <ScalarProperty Name="Sname" ColumnName="Sname" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="Office_Mobile" ColumnName="Office_Mobile" />
+                <ScalarProperty Name="Office_Land" ColumnName="Office_Land" />
+                <ScalarProperty Name="Office_fax" ColumnName="Office_fax" />
+                <ScalarProperty Name="Office_Intercom" ColumnName="Office_Intercom" />
+                <ScalarProperty Name="Office_Location" ColumnName="Office_Location" />
+                <ScalarProperty Name="sub_function_id" ColumnName="sub_function_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sub_function">
+            <EntityTypeMapping TypeName="CorporationModel.sub_function">
+              <MappingFragment StoreEntitySet="sub_function">
+                <ScalarProperty Name="sub_function_id" ColumnName="sub_function_id" />
+                <ScalarProperty Name="sub_function_name" ColumnName="sub_function_name" />
+                <ScalarProperty Name="function_id" ColumnName="function_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
